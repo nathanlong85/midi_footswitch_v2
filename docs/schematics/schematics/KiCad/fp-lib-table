@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name "MIDI Jack")(type KiCad)(uri "${KIPRJMOD}/MIDI Jack.pretty")(options "")(descr ""))
+  (lib (name "SPST Footswitch")(type KiCad)(uri "${KIPRJMOD}/SPST Footswitch.pretty")(options "")(descr ""))
+  (lib (name "TRS Jack")(type KiCad)(uri "${KIPRJMOD}/TRS Jack.pretty")(options "")(descr ""))
+)
