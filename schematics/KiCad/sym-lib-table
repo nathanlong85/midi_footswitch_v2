@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name midi_footswitch-rescue)(type Legacy)(uri ${KIPRJMOD}/midi_footswitch-rescue.lib)(options "")(descr ""))
-)
