@@ -9,8 +9,8 @@
 
 // Private
 #include <DigitalLed.h>
-#include <Button.h>
-#include <ControlChangeButton.h>
+#include <Buttons.h>
+#include <MidiHandlers.h>
 
 ControlChangeButton ccButtons[] = {
   ControlChangeButton(45, 30, 20), // Row 2 - Button 9
@@ -24,11 +24,15 @@ ControlChangeButton ccButtons[] = {
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 void setup() {
-  // Start listening to MIDI on all channels and set callbacks to
+  // Start listening to MIDI on channel 1 and set callbacks to
   // listen for specific incoming MIDI messages
-  MIDI.begin(MIDI_CHANNEL_OMNI);
+  MIDI.begin(1);
 }
 
 void loop() {
   MIDI.read();
+
+  for(size_t i = 0, size = sizeof(ccButtons); i < size; i++) {
+    // ControlChangeButton button = ccButtons[i];
+  }
 }
