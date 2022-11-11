@@ -1,33 +1,47 @@
 #include "Buttons.h"
 
-// GenericButton functions
-GenericButton::GenericButton(int pin, int ledPin) {
+// START Button::Button 
+Button::Button(int pin) {
   pin_ = pin;
-  state_ = LOW;
-
-  led_.setPin(ledPin);
-  led_.turnOff();
-
   pinMode(pin_, INPUT);
 }
+// END Button::Button 
 
-int GenericButton::getPin() { return pin_; }
+// START LedButton
+LedButton::LedButton(int pin, int ledPin)
+: Button(pin) {
+  led_.setPin(ledPin);
+  led_.turnOff();
+}
+// END LedButton
 
-void GenericButton::setState(bool state) { state_ = state; }
+// START StatelessLedButton
+StatelessLedButton::StatelessLedButton(int pin, int ledPin)
+: LedButton(pin, ledPin) {}
+// END StatelessLedButton
 
-bool GenericButton::getState() { return state_; }
+// START StatefulLedButton
+StatefulLedButton::StatefulLedButton(int pin, int ledPin)
+: LedButton(pin, ledPin) {
+  state_ = LOW;
+}
 
-// ControlChangeButton functions
+void StatefulLedButton::manageState() {
+  // Ensure the button state isn't being read too quickly in succession
+  if (millis() - lastRead <= 350) { return; }
+
+  bool switchState = digitalRead(pin_);  
+  if (switchState == HIGH) { setState(); }
+}
+// END StatefulLedButton
+
+// START ControlChangeButton
 ControlChangeButton::ControlChangeButton(int pin, int ledPin, int ccNumber) 
-: GenericButton(pin, ledPin) {
+: StatefulLedButton(pin, ledPin) {
   ccNumber_ = ccNumber;
 }
 
-int ControlChangeButton::getCcNumber() {
-  return ccNumber_;
-}
-
-void ControlChangeButton::setState(bool state) {
-  setState(state);
+void ControlChangeButton::setState() {
   state_ == LOW ? led_.turnOff() : led_.turnOn();
 }
+// END ControlChangeButton

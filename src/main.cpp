@@ -32,6 +32,7 @@ void setup() {
 void loop() {
   MIDI.read();
 
+  // Listen for CC button presses
   for(size_t i = 0, size = sizeof(ccButtons); i < size; i++) {
     // ControlChangeButton button = ccButtons[i];
   }
