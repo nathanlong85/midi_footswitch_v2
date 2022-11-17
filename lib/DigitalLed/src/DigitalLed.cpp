@@ -2,7 +2,8 @@
 
 int DigitalLed::getPin() { return pin_; }
 
-void DigitalLed::setPin(int pin) { 
+void DigitalLed::setPin(int pin)
+{
   pin_ = pin;
   pinMode(pin_, OUTPUT);
 }

@@ -1,8 +1,14 @@
 #ifndef BUTTONS_H
 #define BUTTONS_H
 
-#include <Arduino.h>
+#include <Arduino.h>    // Basic Arduino lib
+#include <ArduinoSTL.h> // C++ STL implementation for Arduino
+
+#include <vector>
+
+// Private
 #include <DigitalLed.h>
+#include <Switches.h>
 
 // --- Terminology ---
 // * LED         - The LED associated with the button. Usually located above
@@ -41,50 +47,51 @@
 //     * PC Message         - Sends 127
 //     * Turns off any other HIGH state PC buttons
 
-// Base button class to derive from. Does not manage state or an LED
-class Button {
+template <class T>
+class Button
+{
 protected:
-  int pin_;                // Arduino pin that the switch is connected to
-  unsigned long lastRead;  // When the switch state was last read
+  static std::vector<T> registered;
+  MomentaryPushButton switch_; // Physical switch instance
 
-public: 
+public:
+  static void read();
+
   Button(int pin);
+  // void readSwitchState();
 };
 
-// Basic button with an LED to derive from
-class LedButton: public Button {
+// Inherit to add LED characteristics to a Button
+class LedButton
+{
 protected:
-  DigitalLed led_;  // LED instance
+  DigitalLed led_; // LED instance
 
 public:
-  LedButton(int pin, int ledPin);
+  LedButton(int ledPin);
 };
 
-// Basic button with an LED that does not have any state
-class StatelessLedButton: public LedButton {
-public:
-  StatelessLedButton(int pin, int ledPin);
-};
-
-// Basic button with an LED that manages state as well
-class StatefulLedButton: public LedButton {
+// Inherit to add state to a button
+class StatefulButton
+{
 protected:
-  bool state_;      // Button state
+  bool state_; // Logical button state
 
 public:
-  StatefulLedButton(int pin, int ledPin);
-  virtual void setState() = 0;
-  void manageState();
+  StatefulButton();
 };
 
-// ControlChange button. Stateful with an LED
-class ControlChangeButton: public StatefulLedButton {
+class ControlChangeButton : public Button<ControlChangeButton>,
+                            public LedButton,
+                            public StatefulButton
+{
 private:
   int ccNumber_;
 
 public:
+  static void registerNew(int pin, int ledPin, int ccNumber);
   ControlChangeButton(int pin, int ledPin, int ccNumber);
-  void setState();
 };
 
+#include "Buttons.tpp"
 #endif

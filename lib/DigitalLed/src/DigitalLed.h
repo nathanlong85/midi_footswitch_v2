@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 
-class DigitalLed {
+class DigitalLed
+{
 private:
   int pin_;
 

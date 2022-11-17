@@ -1,47 +1,50 @@
 #include "Buttons.h"
 
-// START Button::Button 
-Button::Button(int pin) {
-  pin_ = pin;
-  pinMode(pin_, INPUT);
+template <class T>
+Button<T>::Button(int pin)
+{
+  switch_.setPin(pin);
 }
-// END Button::Button 
 
-// START LedButton
-LedButton::LedButton(int pin, int ledPin)
-: Button(pin) {
+LedButton::LedButton(int ledPin)
+{
   led_.setPin(ledPin);
   led_.turnOff();
 }
-// END LedButton
 
-// START StatelessLedButton
-StatelessLedButton::StatelessLedButton(int pin, int ledPin)
-: LedButton(pin, ledPin) {}
-// END StatelessLedButton
-
-// START StatefulLedButton
-StatefulLedButton::StatefulLedButton(int pin, int ledPin)
-: LedButton(pin, ledPin) {
+StatefulButton::StatefulButton()
+{
   state_ = LOW;
 }
 
-void StatefulLedButton::manageState() {
-  // Ensure the button state isn't being read too quickly in succession
-  if (millis() - lastRead <= 350) { return; }
-
-  bool switchState = digitalRead(pin_);  
-  if (switchState == HIGH) { setState(); }
-}
-// END StatefulLedButton
-
-// START ControlChangeButton
-ControlChangeButton::ControlChangeButton(int pin, int ledPin, int ccNumber) 
-: StatefulLedButton(pin, ledPin) {
+ControlChangeButton::ControlChangeButton(int pin, int ledPin, int ccNumber)
+    : Button<ControlChangeButton>(pin), LedButton(ledPin), StatefulButton()
+{
   ccNumber_ = ccNumber;
 }
 
-void ControlChangeButton::setState() {
-  state_ == LOW ? led_.turnOff() : led_.turnOn();
+void ControlChangeButton::registerNew(int pin, int ledPin, int ccNumber)
+{
+  registered.push_back(
+      ControlChangeButton(pin, ledPin, ccNumber));
 }
-// END ControlChangeButton
+
+// void ControlChangeButton::setState()
+// {
+//   state_ == LOW ? led_.turnOff() : led_.turnOn();
+// }
+
+// void StatefulButton::manageState()
+// {
+// Ensure the button state isn't being read too quickly in succession
+// if (millis() - lastRead <= 350)
+// {
+//   return;
+// }
+
+// bool switchState = digitalRead(pin_);
+// if (switchState == HIGH)
+// {
+//   setState();
+// }
+// }
