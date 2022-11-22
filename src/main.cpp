@@ -4,24 +4,13 @@
 #include <ArduinoSTL.h>
 #include <vector>
 
-// Display
-#include <SPI.h>
-#include <U8g2lib.h>
-
-// MIDI
-#include <MIDI.h>
-
 // Private
-#include <DigitalLed.h>
-#include <Switches.h>
+#include <PrivateMidi.h>
 #include <Buttons.h>
-#include <MidiHandlers.h>
-
-MIDI_CREATE_DEFAULT_INSTANCE();
 
 void setup()
 {
-  // Initialize the CC buttons
+  // Initialize the CC buttons. (switchPin, ledPin, ccNumber)
   ControlChangeButton::registerNew(45, 30, 20); // Row 2 - Button  9
   ControlChangeButton::registerNew(46, 31, 21); // Row 2 - Button 10
   ControlChangeButton::registerNew(47, 32, 22); // Row 2 - Button 11
@@ -31,11 +20,11 @@ void setup()
 
   // Start listening to MIDI on channel 1 and set callbacks to
   // listen for specific incoming MIDI messages
-  MIDI.begin(1);
+  PrivateMidi::MIDI.begin(1);
 }
 
 void loop()
 {
-  MIDI.read();
+  PrivateMidi::MIDI.read();
   ControlChangeButton::read();
 }

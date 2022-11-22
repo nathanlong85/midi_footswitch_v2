@@ -1,50 +1,47 @@
 #include "Buttons.h"
 
-template <class T>
-Button<T>::Button(int pin)
-{
-  switch_.setPin(pin);
-}
-
 LedButton::LedButton(int ledPin)
 {
   led_.setPin(ledPin);
   led_.turnOff();
 }
 
-StatefulButton::StatefulButton()
-{
-  state_ = LOW;
-}
-
-ControlChangeButton::ControlChangeButton(int pin, int ledPin, int ccNumber)
-    : Button<ControlChangeButton>(pin), LedButton(ledPin), StatefulButton()
+ControlChangeButton::ControlChangeButton(int switchPin, int ledPin, int ccNumber)
+    : Button<ControlChangeButton>(switchPin), LedButton(ledPin)
 {
   ccNumber_ = ccNumber;
 }
 
-void ControlChangeButton::registerNew(int pin, int ledPin, int ccNumber)
+void ControlChangeButton::registerNew(int switchPin, int ledPin, int ccNumber)
 {
   registered.push_back(
-      ControlChangeButton(pin, ledPin, ccNumber));
+      ControlChangeButton(switchPin, ledPin, ccNumber));
 }
 
-// void ControlChangeButton::setState()
-// {
-//   state_ == LOW ? led_.turnOff() : led_.turnOn();
-// }
+void ControlChangeButton::handlePress()
+{
+  bool switchState = switch_.read();
 
-// void StatefulButton::manageState()
-// {
-// Ensure the button state isn't being read too quickly in succession
-// if (millis() - lastRead <= 350)
-// {
-//   return;
-// }
+  if (switchState == previousSwitchState_)
+  {
+    return;
+  }
 
-// bool switchState = digitalRead(pin_);
-// if (switchState == HIGH)
-// {
-//   setState();
-// }
-// }
+  previousSwitchState_ = switchState;
+
+  if (switchState == HIGH)
+  {
+    if (currentState_ == LOW)
+    {
+      currentState_ = HIGH;
+      led_.turnOn();
+      PrivateMidi::CC::sendOn(ccNumber_);
+    }
+    else if (currentState_ == HIGH)
+    {
+      currentState_ = LOW;
+      led_.turnOff();
+      PrivateMidi::CC::sendOff(ccNumber_);
+    }
+  }
+}
