@@ -2,7 +2,7 @@
 
 DigitalLed::DigitalLed()
 {
-  int pin_ = 0;
+  pin_ = 0;
 }
 
 int DigitalLed::getPin() { return pin_; }
