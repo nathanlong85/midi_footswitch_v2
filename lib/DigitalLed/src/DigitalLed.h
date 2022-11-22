@@ -9,7 +9,7 @@ private:
   int pin_;
 
 public:
-  DigitalLed(){};
+  DigitalLed();
 
   int getPin();
 

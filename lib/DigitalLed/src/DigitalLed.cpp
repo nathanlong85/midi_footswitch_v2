@@ -1,5 +1,10 @@
 #include "DigitalLed.h"
 
+DigitalLed::DigitalLed()
+{
+  int pin_ = 0;
+}
+
 int DigitalLed::getPin() { return pin_; }
 
 void DigitalLed::setPin(int pin)

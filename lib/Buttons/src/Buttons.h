@@ -22,7 +22,7 @@ protected:
 
 public:
   static void read();
-  Button(int switchPin);
+  explicit Button(int switchPin);
 };
 
 class LedButton // Inherit to add LED characteristics to a Button
@@ -31,7 +31,7 @@ protected:
   DigitalLed led_; // LED instance
 
 public:
-  LedButton(int ledPin);
+  explicit LedButton(int ledPin);
 };
 
 class StatefulButton // Inherit to add state to a button

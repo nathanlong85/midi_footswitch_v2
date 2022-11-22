@@ -1,5 +1,12 @@
 #include "Switches.h"
 
+PhysicalSwitch::PhysicalSwitch()
+{
+  pin_ = 0;
+  lastState_ = LOW;
+  lastReadAt_ = 0;
+}
+
 void PhysicalSwitch::setPin(int pin)
 {
   pin_ = pin;
@@ -8,7 +15,7 @@ void PhysicalSwitch::setPin(int pin)
 
 // A switch is ready to read when it has either never been read
 // before or if the minReadInterval has passed
-bool PhysicalSwitch::readyToRead(unsigned long *currentTime)
+bool PhysicalSwitch::readyToRead(const unsigned long *currentTime)
 {
   return lastReadAt_ == 0 ||
          *currentTime - lastReadAt_ >= minReadInterval_;
