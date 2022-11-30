@@ -1,5 +1,22 @@
 # MIDI Footswitch v2
 
+## The General Idea
+
+The idea behind this is to be a customizable, solid footswitch for sending and receiving MIDI commands via USB. The following buttons will be implemented:
+
+| Button | Count | Function |
+|--------|-------|----------|
+| MIDI PC  | 5 | Send a Program Change MIDI command to switch between presets, snapshots, etc. |
+| MIDI CC  | 6 | Send a Control Change MIDI command to switch pedals on/off |
+| PC StepDown | 1 | Lower the range of PC numbers corresponding with the buttons (e.g. 6-10 to 1-5) |
+| PC StepUp | 1 | Raise the range of PC numbers corresponding with the buttons (e.g. 1-5 to 6-10) |
+| TempoTap | 1 | This'll probably just end up being a CC button |
+
+The main purpose of this footswitch is to control guitar plugins and presets, specifically in LiveProfessor, but the MIDI out features should all still work fine in another program. Additionally, the footswitch accepts MIDI input. This allows LiveProfessor to send (for example) CC commands when switching presets that will control the button states and have them match up with the plugin states in the preset.
+
+For example, if I switch to a preset that has only a TS808 plugin enabled, the footswitch will first switch all CC buttons off. Then LiveProfessor can send a CC command back to the footswitch to let it know that the button that corresponds with the TS808 should be on.
+
+
 ## Components Used
 
 | Type | Count | Brand | Model | Link | Notes |
@@ -8,12 +25,12 @@
 | AVR Programmer | 1 | HiLetgo | USBTinyISP | https://a.co/d/3sgW6Hk | Necessary for uploading firmware since Hiduino is using the Arduino's USB port for MIDI |
 | Connections Board | 1 | Custom | N/A | N/A | Mostly a convenience to make things as modular as possible. Also used in place of a breadboard for components such as resistors for the LEDs and switches |
 | Display | 1 | Teyleten Robot | 2.42" 128x64 SSD1309 OLED | https://a.co/d/j11dIGv | Connected via SPI |
-| LED | 14 | | | | 5mm |
-| LED Holder | 14 | | | | |
+| LED | 14 | N/A | N/A | N/A | Red 5mm |
+| LED Holder | 14 | DaierTek | 5MM LED Lamp Holder | https://a.co/d/9saOy9M | |
+| SD Card Module | 1 | HiLetgo | Micro SD TF Card Adater Reader Module | https://a.co/d/amf9kn3 | Connected via SPI |
 | SD Card | 1 | | | | No need for a high capacity as the only things being stored are configs |
-| SD Card Module | 1 | | | | Connected via SPI |
-| Switch | 1 | | | | |
-| TSR Jack | 1 | | | | |
+| Switch | 1 | ESUPPORT | Momentary SPST Button | https://a.co/d/4z8qo4Z | |
+| TSR Jack | 1 | Kingsing | N/A | https://a.co/d/iaOluce | For the expression pedal |
 
 Additionally, various electrical components, connector wires, header pins, etc. were used. Those should be available in the KiCad schematics.
 
