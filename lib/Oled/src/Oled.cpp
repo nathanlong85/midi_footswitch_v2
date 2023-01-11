@@ -5,7 +5,6 @@ Oled *Oled::instance_ = 0;
 Oled::Oled()
 {
   u8g2_.begin();
-  u8g2_.clearBuffer();
 
   u8g2log_.begin(u8g2logWidth, u8g2logHeight, u8g2logBuffer_);
   u8g2log_.setLineHeightOffset(1);
@@ -22,7 +21,7 @@ Oled *Oled::getInstance()
   return instance_;
 }
 
-void Oled::displayInit(bool clearBuffer = false)
+void Oled::displayInit(bool clearBuffer)
 {
   if (clearBuffer)
   {
@@ -42,11 +41,11 @@ void Oled::displayInit(bool clearBuffer = false)
   u8g2_.drawStr(109, 6, "EXP");
   u8g2_.drawFrame(111, 7, 10, 50);
 
+  u8g2_.sendBuffer();
+
   updateActivePreset();
   updatePresetRange();
   updateExpressionPedalLevel();
-
-  u8g2_.sendBuffer();
 }
 
 void Oled::updateActivePreset()

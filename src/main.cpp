@@ -24,7 +24,7 @@ void setup()
   PrivateMidi::MIDI.begin(1);
 
   // Initialize the OLED display
-  Oled::getInstance()->displayInit();
+  Oled::getInstance()->displayInit(false);
 }
 
 void loop()
