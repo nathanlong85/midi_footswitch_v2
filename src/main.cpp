@@ -7,6 +7,7 @@
 // Private
 #include <PrivateMidi.h>
 #include <Buttons.h>
+#include <Oled.h>
 
 void setup()
 {
@@ -21,10 +22,16 @@ void setup()
   // Start listening to MIDI on channel 1 and set callbacks to
   // listen for specific incoming MIDI messages
   PrivateMidi::MIDI.begin(1);
+
+  // Initialize the OLED display
+  Oled::getInstance()->displayInit(false);
 }
 
 void loop()
 {
+  // Check for incoming MIDI messages
   PrivateMidi::MIDI.read();
+
+  // Check for any pressed CC buttons
   ControlChangeButton::read();
 }

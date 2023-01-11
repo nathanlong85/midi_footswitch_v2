@@ -44,6 +44,7 @@ class ControlChangeButton : public Button<ControlChangeButton>,
                             public LedButton,
                             public StatefulButton
 {
+
 private:
   int ccNumber_;
 
