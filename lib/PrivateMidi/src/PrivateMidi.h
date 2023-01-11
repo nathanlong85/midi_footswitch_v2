@@ -14,6 +14,7 @@ namespace PrivateMidi
 
   namespace CC
   {
+    void logCcEvent(int ccNumber, int value);
     void sendOff(int ccNumber);
     void sendOn(int ccNumber);
   } // namespace CC
