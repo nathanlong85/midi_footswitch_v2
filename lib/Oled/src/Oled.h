@@ -35,16 +35,16 @@ public:
   void displayInit(bool clearBuffer = false);
 
   // Update the screen section for "Active"
-  void updateActivePreset();
+  void updateActivePreset(int programNumber);
 
   // Update the screen section for "Range"
-  void updatePresetRange();
+  void updatePresetRange(int min, int max);
 
   // Update the expression pedal bar
   void updateExpressionPedalLevel();
 
   // Adds a new log line to the logger section of the screen
-  void addLogLine(char *message);
+  void addLogLine(const char *message);
 
 private:
   // Hide the constructor since this is a Singleton Class

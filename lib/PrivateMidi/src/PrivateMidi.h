@@ -18,6 +18,12 @@ namespace PrivateMidi
     void sendOff(int ccNumber);
     void sendOn(int ccNumber);
   } // namespace CC
+
+  namespace PC
+  {
+    void logPcEvent(int programNumber);
+    void send(int programNumber);
+  }
 } // namespace PrivateMidi
 
 #endif

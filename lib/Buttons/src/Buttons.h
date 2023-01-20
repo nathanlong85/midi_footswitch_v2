@@ -50,8 +50,42 @@ private:
 
 public:
   static void registerNew(int switchPin, int ledPin, int ccNumber);
+  static void changeStateAll(bool newState);
 
   ControlChangeButton(int switchPin, int ledPin, int ccNumber);
+  void handlePress();
+};
+
+class ProgramChangeButton : public Button<ProgramChangeButton>,
+                            public LedButton,
+                            public StatefulButton
+{
+
+private:
+  static ProgramChangeButton *activeButton;
+  static int nextAssignableBaseNumber;
+
+  int baseNumber_;
+
+public:
+  static void registerNew(int switchPin, int ledPin);
+
+  ProgramChangeButton(int switchPin, int ledPin);
+  void handlePress();
+};
+
+class ProgramChangeStepButton : public Button<ProgramChangeStepButton>,
+                                public LedButton,
+                                public StatefulButton
+{
+private:
+int stepMultiplierModifier_;
+
+public:
+  static int stepMultiplier;
+  static void registerNew(int switchPin, int ledPin, int stepMultiplierModifier);
+
+  ProgramChangeStepButton(int switchPin, int ledPin, int stepMultiplierModifier);
   void handlePress();
 };
 
