@@ -27,4 +27,21 @@ namespace PrivateMidi
       logCcEvent(ccNumber, midiOnVal);
     }
   } // namespace CC
+
+  namespace PC
+  {
+    void logPcEvent(int programNumber)
+    {
+      char buf[18];
+      snprintf(buf, 18, "PC Out: %d", programNumber);
+
+      Oled::getInstance()->addLogLine(buf);
+    }
+
+    void send(int programNumber)
+    {
+      MIDI.sendProgramChange(programNumber, sendChannel);
+      logPcEvent(programNumber);
+    }
+  } // namespace PC
 } // namespace PrivateMidi

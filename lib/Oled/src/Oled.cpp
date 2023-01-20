@@ -43,26 +43,50 @@ void Oled::displayInit(bool clearBuffer)
 
   u8g2_.sendBuffer();
 
-  updateActivePreset();
-  updatePresetRange();
+  updateActivePreset(-1);    // Using -1 to get a "-" value
+  updatePresetRange(-1, -1); // Using -1 to get a "-" value
   updateExpressionPedalLevel();
 }
 
-void Oled::updateActivePreset()
+// programNumber must be between 0 and 127, otherwise
+// a "-" will be shown as the value
+void Oled::updateActivePreset(int programNumber)
 {
   u8g2_.clearBuffer();
+  char buf[5];
+
+  if (programNumber >= 0 && programNumber <= 127)
+  {
+    snprintf(buf, 5, "%d", programNumber);
+  }
+  else
+  {
+    snprintf(buf, 5, "-");
+  }
 
   u8g2_.setFont(u8g2_font_6x12_tf);
-  u8g2_.drawStr(0, 23, "127");
+  u8g2_.drawStr(0, 23, buf);
   u8g2_.updateDisplayArea(0, 2, 3, 1);
 }
 
-void Oled::updatePresetRange()
+// min and max must be between 0 and 127, otherwise
+// a "-" will be shown as the value
+void Oled::updatePresetRange(int min, int max)
 {
   u8g2_.clearBuffer();
+  char buf[8];
+
+  if ((min >= 0 && min <= 127) && (max >= 0 && max <= 127))
+  {
+    snprintf(buf, 8, "%d-%d", min, max);
+  }
+  else
+  {
+    snprintf(buf, 8, "-");
+  }
 
   u8g2_.setFont(u8g2_font_6x12_tf);
-  u8g2_.drawStr(48, 23, "108-127");
+  u8g2_.drawStr(48, 23, buf);
   u8g2_.updateDisplayArea(6, 2, 6, 1);
 }
 
@@ -74,7 +98,7 @@ void Oled::updateExpressionPedalLevel()
   u8g2_.updateDisplayArea(14, 1, 1, 6);
 }
 
-void Oled::addLogLine(char *message)
+void Oled::addLogLine(const char *message)
 {
   u8g2log_.print(message);
   u8g2log_.print("\n");
