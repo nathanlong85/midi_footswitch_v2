@@ -57,5 +57,5 @@ void loop()
   ProgramChangeButton::read();
 
   // Check for a pressed PC StepUp or PC StepDown button
-  // pcStepDownButton.
+  ProgramChangeStepButton::read();
 }

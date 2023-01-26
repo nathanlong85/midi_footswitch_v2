@@ -22,6 +22,8 @@ protected:
 
 public:
   static void read();
+  static int registeredCount();
+  
   explicit Button(int switchPin);
 };
 
@@ -71,7 +73,9 @@ public:
   static void registerNew(int switchPin, int ledPin);
 
   ProgramChangeButton(int switchPin, int ledPin);
+  
   void handlePress();
+  int programValue();
 };
 
 class ProgramChangeStepButton : public Button<ProgramChangeStepButton>,
@@ -79,13 +83,13 @@ class ProgramChangeStepButton : public Button<ProgramChangeStepButton>,
                                 public StatefulButton
 {
 private:
-int stepMultiplierModifier_;
+int stepMultiplierAddend_;
 
 public:
   static int stepMultiplier;
-  static void registerNew(int switchPin, int ledPin, int stepMultiplierModifier);
+  static void registerNew(int switchPin, int ledPin, int stepMultiplierAddend);
 
-  ProgramChangeStepButton(int switchPin, int ledPin, int stepMultiplierModifier);
+  ProgramChangeStepButton(int switchPin, int ledPin, int stepMultiplierAddend);
   void handlePress();
 };
 

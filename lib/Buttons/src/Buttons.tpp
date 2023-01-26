@@ -15,3 +15,9 @@ void Button<T>::read()
     registered[i].handlePress();
   }
 }
+
+template <class T>
+int Button<T>::registeredCount()
+{
+  registered.size();
+}

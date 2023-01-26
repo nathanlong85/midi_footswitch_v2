@@ -65,6 +65,12 @@ ProgramChangeButton::ProgramChangeButton(int switchPin, int ledPin)
   nextAssignableBaseNumber++;
 }
 
+int ProgramChangeButton::programValue()
+{
+  return baseNumber_ +
+         (registeredCount() * ProgramChangeStepButton::stepMultiplier);
+}
+
 void ProgramChangeButton::registerNew(int switchPin, int ledPin)
 {
   registered.push_back(
@@ -99,18 +105,18 @@ void ProgramChangeButton::handlePress()
   }
 }
 
-int ProgramChangeStepButton::stepMultiplier = 1;
+int ProgramChangeStepButton::stepMultiplier = 0;
 
-ProgramChangeStepButton::ProgramChangeStepButton(int switchPin, int ledPin, int stepMultiplierModifier)
+ProgramChangeStepButton::ProgramChangeStepButton(int switchPin, int ledPin, int stepMultiplierAddend)
     : Button<ProgramChangeStepButton>(switchPin), LedButton(ledPin)
 {
-  stepMultiplierModifier_ = stepMultiplierModifier;
+  stepMultiplierAddend_ = stepMultiplierAddend;
 }
 
-void ProgramChangeStepButton::registerNew(int switchPin, int ledPin, int stepMultiplierModifier)
+void ProgramChangeStepButton::registerNew(int switchPin, int ledPin, int stepMultiplierAddend)
 {
   registered.push_back(
-      ProgramChangeStepButton(switchPin, ledPin, stepMultiplierModifier));
+      ProgramChangeStepButton(switchPin, ledPin, stepMultiplierAddend));
 }
 
 void ProgramChangeStepButton::handlePress()
@@ -123,16 +129,21 @@ void ProgramChangeStepButton::handlePress()
 
     if (switchState == HIGH)
     {
-      if (stepMultiplier + stepMultiplierModifier_ >= 1)
+      int newStepMultiplier = stepMultiplier + stepMultiplierAddend_;
+
+      if (newStepMultiplier >= 0 && newStepMultiplier < )
       {
-        stepMultiplier += stepMultiplierModifier_;
+        stepMultiplier = newStepMultiplier;
+
+        int rangeMin = ProgramChangeButton::registeredCount() * stepMultiplier;
+        int rangeMax = (rangeMin + ProgramChangeButton::registeredCount()) - 1;
+
+        Oled::getInstance()->updatePresetRange(rangeMin, rangeMax);
       }
       else
       {
         return;
       }
-
-      
     }
   }
 }
