@@ -22,15 +22,16 @@ For example, if I switch to a preset that has only a TS808 plugin enabled, the f
 | Type | Count | Brand | Model | Link | Notes |
 |------|-------|-------|------|-------|-------|
 | Arduino | 1 | Elegoo | Mega2560 | | Chosen for the large number of pins available for buttons |
-| AVR Programmer | 1 | HiLetgo | USBTinyISP | https://a.co/d/3sgW6Hk | Necessary for uploading firmware since Hiduino is using the Arduino's USB port for MIDI |
 | Connections Board | 1 | Custom | N/A | N/A | Mostly a convenience to make things as modular as possible. Also used in place of a breadboard for components such as resistors for the LEDs and switches |
 | Display | 1 | Teyleten Robot | 2.42" 128x64 SSD1309 OLED | https://a.co/d/j11dIGv | Connected via SPI |
 | LED | 14 | N/A | N/A | N/A | Red 5mm |
 | LED Holder | 14 | DaierTek | 5MM LED Lamp Holder | https://a.co/d/9saOy9M | |
 | SD Card Module | 1 | HiLetgo | Micro SD TF Card Adater Reader Module | https://a.co/d/amf9kn3 | Connected via SPI |
 | SD Card | 1 | | | | No need for a high capacity as the only things being stored are configs |
-| Switch | 1 | ESUPPORT | Momentary SPST Button | https://a.co/d/4z8qo4Z | |
+| FootSwitch | 14 | ESUPPORT | Momentary SPST Button | https://a.co/d/4z8qo4Z | |
 | TSR Jack | 1 | Kingsing | N/A | https://a.co/d/iaOluce | For the expression pedal |
+| Switch | 1 | uxcell | SS12F32-G7 | https://a.co/d/9ZpxkgF | Mini slider switch to change USB modes from Midi to Arduino for uploads |
+| USB Jack | 1 | QIANRENON | N/A | https://a.co/d/0RwaqkX | USB-A to USB-C converter and passthrough plate |
 
 Additionally, various electrical components, connector wires, header pins, etc. were used. Those should be available in the KiCad schematics.
 
